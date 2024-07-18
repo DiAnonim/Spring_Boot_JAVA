@@ -10,7 +10,7 @@ spring:
     port: "8080"
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
 
 

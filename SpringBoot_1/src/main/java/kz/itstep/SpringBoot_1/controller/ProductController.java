@@ -2,45 +2,47 @@ package kz.itstep.SpringBoot_1.controller;
 
 import jakarta.validation.Valid;
 import kz.itstep.SpringBoot_1.model.Product;
-import kz.itstep.SpringBoot_1.service.ProductService;
+import kz.itstep.SpringBoot_1.service.IProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController {
-    private final ProductService productService;
+    private final IProductService productService;
 
     @GetMapping("/")
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<?> getAllProducts() {
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable int id) {
-        return productService.getProductById(id);
+    public ResponseEntity<?> getProductById(@PathVariable int id) {
+        return ResponseEntity.ok(productService.getProductById(id));
     }
 
-    @GetMapping("/product_name/{name}")
-    public Product getProductByName(@PathVariable String name) {
-        return productService.getProductByName(name);
+    @GetMapping("/name/{name}")
+    public ResponseEntity<?> getProductByName(@PathVariable String name) {
+        return ResponseEntity.ok(productService.getProductByName(name));
     }
 
     @PostMapping("/create")
-    public Product createProduct(@Valid @RequestBody Product product) {
-        return productService.createProduct(product);
+    public ResponseEntity<?> createProduct(@Valid @RequestBody Product product) {
+        return ResponseEntity.ok(productService.createProduct(product));
     }
 
     @PatchMapping("/update/{id}")
-    public Product updateProduct(@Valid @PathVariable int id, @RequestBody Product product) {
-        return productService.updateProduct(id, product);
+    public ResponseEntity<?> updateProduct(@Valid @PathVariable int id, @RequestBody Product product) {
+        return ResponseEntity.accepted().body(productService.updateProduct(id, product));
     }
 
     @DeleteMapping("/delete/{id}")
-    public boolean deleteProduct(@PathVariable int id) {
-        return productService.deleteProduct(id);
+    public ResponseEntity<?> deleteProduct(@PathVariable int id) {
+        return ResponseEntity.accepted().body(productService.deleteProduct(id));
     }
+
 }

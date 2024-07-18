@@ -2,47 +2,47 @@ package kz.itstep.SpringBoot_1.controller;
 
 import jakarta.validation.Valid;
 import kz.itstep.SpringBoot_1.model.User;
-import kz.itstep.SpringBoot_1.service.UserService;
+import kz.itstep.SpringBoot_1.service.IUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
 //    localhost:8081/
-    private final UserService userService;
+    private final IUserService userService;
 
     @GetMapping("/")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<?> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id) {
-        return userService.getUserById(id);
+    public ResponseEntity<?> getUserById(@PathVariable int id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @GetMapping("/username/{name}")
-    public User getUserByName(@PathVariable String name) {
-        return userService.getUserByName(name);
+    public ResponseEntity<?> getUserByName(@PathVariable String name) {
+        return ResponseEntity.ok(userService.getUserByName(name));
     }
 
     @PostMapping("/create")
-    public User createUser(@Valid @RequestBody User user) {
-        return userService.createUser(user);
+    public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+        return ResponseEntity.ok(userService.createUser(user));
     }
 
     @PatchMapping("/update/{id}")
-    public User updateUser(@Valid @PathVariable int id, @RequestBody User user) {
-        return userService.updateUser(id, user);
+    public ResponseEntity<?> updateUser(@Valid @PathVariable int id, @RequestBody User user) {
+        return ResponseEntity.accepted().body(userService.updateUser(id, user));
     }
 
     @DeleteMapping("/delete/{id}")
-    public boolean deleteUser(@PathVariable int id) {
-        return userService.deleteUser(id);
+    public ResponseEntity<?> deleteUser(@PathVariable int id) {
+        return ResponseEntity.accepted().body(userService.deleteUser(id));
     }
 
 }
